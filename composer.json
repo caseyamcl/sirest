@@ -1,0 +1,32 @@
+{
+    "name": "caseyamcl/sirest",
+    "type": "package",
+    "description": "RESTful helper libraries for Silex",
+    "keywords": ["silex", "REST"],
+    "homepage": "http://github.com/caseyamcl/sirest",
+    "license": "MIT",
+    "authors":
+    [
+        {
+            "name":     "Casey McLaughlin",
+            "email":    "caseyamcl@gmail.com",
+            "homepage": "http://caseymclaughlin.com",
+            "role":     "Developer"
+        }
+
+    ],
+    "autoload": {
+        "psr-0": {
+            "SiRest": ["src/", "tests/"]
+        }
+    },
+    "require": {
+        "willdurand/negotiation" : ">=1.0.1",
+        "symfony/http-foundation": "~2.3",
+        "symfony/http-kernel"    : "~2.3"
+    },
+    "require-dev": {
+        "silex/silex": ">=1.2.0",        
+        "twig/twig"  : ">=1.13.0"
+    }
+}
