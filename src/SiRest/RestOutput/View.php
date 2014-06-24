@@ -47,6 +47,8 @@ abstract class View implements ViewInterface
     // --------------------------------------------------------------
 
     /**
+     * Return any additional headers that were included in the view
+     * 
      * @return array
      */
     public function getHeaders()
