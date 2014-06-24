@@ -26,6 +26,11 @@ class RepresentationTypeCollection implements \IteratorAggregate
 
     // --------------------------------------------------------------
 
+    /**
+     * Constructor
+     * 
+     * @param \SiRest\RestOutput\RepresentationTypeInterface[] $representations
+     */
     public function __construct($representations = array())
     {
         foreach ($representations as $key => $type) {
@@ -35,6 +40,10 @@ class RepresentationTypeCollection implements \IteratorAggregate
     
     // --------------------------------------------------------------
 
+    /**
+     * @param string $key
+     * @param \SiRest\RestOutput\RepresentationTypeInterface $type
+     */
     public function set($key, RepresentationTypeInterface $type)
     {
         $this->types[$key] = $type;
@@ -42,6 +51,10 @@ class RepresentationTypeCollection implements \IteratorAggregate
 
     // --------------------------------------------------------------
 
+    /**
+     * @param string $key
+     * @return \SiRest\RestOutput\RepresentationTypeInterface
+     */
     public function __get($key)
     {
         return $this->get($key);
@@ -49,6 +62,10 @@ class RepresentationTypeCollection implements \IteratorAggregate
 
     // --------------------------------------------------------------
 
+    /**
+     * @param string $key
+     * @return boolean
+     */
     public function __isset($key)
     {
         return $this->has($key);
@@ -56,6 +73,10 @@ class RepresentationTypeCollection implements \IteratorAggregate
 
     // --------------------------------------------------------------
 
+    /**
+     * @param string $key
+     * @return \SiRest\RestOutput\RepresentationTypeInterface
+     */    
     public function get($key)
     {
         return $this->types[$key];
@@ -63,6 +84,10 @@ class RepresentationTypeCollection implements \IteratorAggregate
 
     // --------------------------------------------------------------
 
+    /**
+     * @param string $key
+     * @return boolean
+     */    
     public function has($key)
     {
         return isset($this->types[$key]);
@@ -70,6 +95,9 @@ class RepresentationTypeCollection implements \IteratorAggregate
 
     // --------------------------------------------------------------
 
+    /**
+     * @param string $key
+     */    
     public function remove($key)
     {
         unset($this->types[$key]);
@@ -77,6 +105,9 @@ class RepresentationTypeCollection implements \IteratorAggregate
 
     // --------------------------------------------------------------
 
+    /**
+     * @return array
+     */    
     public function keys()
     {
         return array_keys($this->types);
@@ -84,6 +115,10 @@ class RepresentationTypeCollection implements \IteratorAggregate
 
     // --------------------------------------------------------------
 
+    /**
+     * @param \SiRest\RestOutput\RepresentationTypeInterface $type
+     * @return boolean
+     */
     public function contains(RepresentationTypeInterface $type)
     {
         return in_array($type, $this->types, false);
@@ -91,6 +126,9 @@ class RepresentationTypeCollection implements \IteratorAggregate
 
     // --------------------------------------------------------------
 
+    /**
+     * @return array
+     */
     public function all()
     {
         return $this->types;
@@ -98,6 +136,9 @@ class RepresentationTypeCollection implements \IteratorAggregate
     
     // --------------------------------------------------------------
 
+    /**
+     * @return \ArrayIterator
+     */
     public function getIterator()
     {
         return new \ArrayIterator($this->all());
