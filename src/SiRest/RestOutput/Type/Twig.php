@@ -79,7 +79,7 @@ class Twig implements RepresentationTypeInterface, ErrorRendererInterface
      * @return string
      * @throws LogicException
      */
-    public function render(array $params)
+    public function render(array $params = array())
     {        
         // Validate template key
         if ( ! isset($params['template'])) {

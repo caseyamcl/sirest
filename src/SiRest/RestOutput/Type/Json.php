@@ -32,9 +32,9 @@ class Json implements RepresentationTypeInterface, ErrorRendererInterface
 
     // --------------------------------------------------------------
 
-    public function render($data)
+    public function render(array $params = [])
     {
-        return new JsonResponse($data);
+        return new JsonResponse($params);
     }
 
     // --------------------------------------------------------------
