@@ -80,7 +80,7 @@ abstract class View implements ViewInterface
     final protected function addType(RepresentationTypeInterface $rep, Closure $callback)
     {
         $this->representations[$rep->getMime()] = function() use ($rep, $callback) { 
-            return $callback($rep);  
+            return $rep->render($callback($rep));
         };
     }
 
