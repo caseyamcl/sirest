@@ -75,6 +75,18 @@ class Twig implements RepresentationTypeInterface, ErrorRendererInterface
     // --------------------------------------------------------------
 
     /**
+     * Get Twig
+     * 
+     * @return \Twig_Environment
+     */
+    public function getTwig()
+    {
+        return $this->twig;
+    }
+    
+    // --------------------------------------------------------------
+
+    /**
      * @param array $params  Must contain ['template'] key and optionally ['data'] key
      * @return string
      * @throws LogicException
