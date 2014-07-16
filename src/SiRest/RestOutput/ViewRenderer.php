@@ -94,7 +94,7 @@ class ViewRenderer
     {
         // Get representations
         $reps = $view->getRepresentations();
-
+                
         // Get the available MIMES
         $availMimes    = array_keys($reps);
         $acceptedMimes = $this->request->headers->get('Accept');
