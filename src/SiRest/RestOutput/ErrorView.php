@@ -14,7 +14,8 @@
 
 namespace SiRest\RestOutput;
 
-use Exception;
+use Exception,
+    Symfony\Component\HttpFoundation\Response;
 
 /**
  * Generic Error View
@@ -24,7 +25,7 @@ use Exception;
 class ErrorView implements ViewInterface
 {
     /**
-     * @var array 
+     * @var array
      */
     private $representations;
 
@@ -34,14 +35,14 @@ class ErrorView implements ViewInterface
      * Constructor
      *
      * Sets representations upon construction
-     * 
-     * @param SiRest\RestOutput\RepresentationTypeCollection $types
+     *
+     * @param RepresentationTypeCollection $types
      * @param Exception $e
      * @param int       $httpCode
      * @param boolean   $debugMode
      */
     public function __construct(RepresentationTypeCollection $types, Exception $e, $httpCode, $debugMode)
-    {                
+    {
         // Set each representation to a callback calling the handler method for rendering the error
         foreach ($types as $type) {
 
@@ -49,14 +50,14 @@ class ErrorView implements ViewInterface
             if ( ! $type instanceOf ErrorRendererInterface) {
                 continue;
             }
-            
+
             $this->representations[$type->getMime()] = function() use ($type, $e, $httpCode, $debugMode) {
                 return call_user_func(array($type, 'renderError'), $e, $httpCode, $debugMode);
             };
         }
-        
+
     }
-    
+
     // --------------------------------------------------------------
 
     /**
@@ -69,9 +70,14 @@ class ErrorView implements ViewInterface
 
     // --------------------------------------------------------------
 
-    public function getHeaders()
+    /**
+     * Finalize the response
+     *
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     */
+    public function finalize(Response $response)
     {
-        return array();
+        // pass
     }
 }
 

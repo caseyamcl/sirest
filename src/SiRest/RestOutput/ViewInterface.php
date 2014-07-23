@@ -14,6 +14,8 @@
 
 namespace SiRest\RestOutput;
 
+use Symfony\Component\HttpFoundation\Response;
+
 /**
  * View Interface
  *
@@ -36,6 +38,13 @@ interface ViewInterface
      * @return array
      */
     function getRepresentations();
+
+    /**
+     * Finalize a response before sending it
+     *
+     * @param \Symfony\Component\HttpFoundation\Response $response
+     */
+    function finalize(Response $response);
 }
 
 /* EOF: ViewInterface.php */

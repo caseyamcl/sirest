@@ -48,9 +48,9 @@ class ViewRenderer
     public function __construct(Request $request = null, Negotiator $negotiator = null)
     {
         if ($request) {
-            $this->setRequest($request);    
+            $this->setRequest($request);
         }
-        
+
         $this->setNegotiator($negotiator ?: new Negotiator);
     }
 
@@ -82,9 +82,9 @@ class ViewRenderer
 
     /**
      * Render the view
-     * 
+     *
      * Negotiates the correct representation based on the request and returns it
-     * 
+     *
      * @param \SiRest\RestOutput\ViewInterface $view
      * @param int $httpCode
      * @param array $extraHeaders
@@ -94,7 +94,7 @@ class ViewRenderer
     {
         // Get representations
         $reps = $view->getRepresentations();
-                
+
         // Get the available MIMES
         $availMimes    = array_keys($reps);
         $acceptedMimes = $this->request->headers->get('Accept');
@@ -110,7 +110,9 @@ class ViewRenderer
                 ? call_user_func($formatData)
                 : $formatData;
 
-            return $this->finalize($response, $httpCode, $extraHeaders);
+            $resp = $this->finalize($response, $httpCode, $extraHeaders);
+            $view->finalize($resp);
+            return $resp;
         }
         else {
             return new Response('Could not negotiate Content-Type', 415, array('Content-Type' => 'text/plain'));
@@ -121,7 +123,7 @@ class ViewRenderer
 
     /**
      * Finalize a response and send it
-     * 
+     *
      * @param \Symfony\Component\HttpFoundation\Response|string $response
      * @param int $httpCode
      * @param array $extraHeaders
@@ -134,7 +136,7 @@ class ViewRenderer
         }
         else {
             $response->setStatusCode($httpCode);
-            $response->headers->add($extraHeaders);            
+            $response->headers->add($extraHeaders);
         }
 
         return $response;

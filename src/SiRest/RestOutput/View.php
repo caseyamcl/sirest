@@ -14,11 +14,12 @@
 
 namespace SiRest\RestOutput;
 
-use Closure;
+use Closure,
+    Symfony\Component\HttpFoundation\Response;
 
 /**
  * Views are newable entities.
- * 
+ *
  * Most of the work should be done in 'buildRepresentations', where the collection
  * of representationTypes is passed in during runtime.
  *
@@ -30,7 +31,7 @@ abstract class View implements ViewInterface
      * @var array  Array of mime-type => callback/Response/strings
      */
     private $representations;
-    
+
     // --------------------------------------------------------------
 
     /**
@@ -46,60 +47,55 @@ abstract class View implements ViewInterface
 
     // --------------------------------------------------------------
 
-    /**
-     * Return any additional headers that were included in the view
-     * 
-     * @return array
-     */
-    public function getHeaders()
+    public function finalize(Response $response)
     {
-        return array();
+        // pass; don't do anything to the response
     }
-    
+
     // --------------------------------------------------------------
 
     /**
      * {@inheritdoc}
-     */   
+     */
     public function getRepresentations()
     {
         return $this->representations;
     }
-    
-    // ---------------------------------------------------------------    
+
+    // ---------------------------------------------------------------
 
     /**
      * Add a representation type
-     * 
+     *
      * Adds a defined representation type to the array.
-     * 
+     *
      * If \Closure is not set, then it uses the default render() method
      * from the representation type object
-     * 
+     *
      * @param RepresentationTypeInterface $rep
      * @param Closure                     $callback
      */
     final protected function addType(RepresentationTypeInterface $rep, Closure $callback)
     {
-        $this->representations[$rep->getMime()] = function() use ($rep, $callback) { 
+        $this->representations[$rep->getMime()] = function() use ($rep, $callback) {
             return $rep->render($callback($rep));
         };
     }
 
-    // ---------------------------------------------------------------    
+    // ---------------------------------------------------------------
 
     /**
      * Add a representation
-     * 
+     *
      * Adds a custom representation to the representation array
-     * 
+     *
      * @param string $mime
-     * @param \Symfony\Component\HttpFoundation\Response|Closure|callable|string $resp
+     * @param Response|Closure|callable|string $resp
      */
     final protected function addRepresentation($mime, $resp)
     {
         $this->representations[$mime] = $resp;
-    }   
+    }
 }
 
 /* EOF: View.php */
