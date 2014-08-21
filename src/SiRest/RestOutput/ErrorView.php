@@ -75,7 +75,7 @@ class ErrorView implements ViewInterface
      *
      * @param \Symfony\Component\HttpFoundation\Response $response
      */
-    public function finalize(Response $response)
+    public function finalize(Response &$response)
     {
         // pass
     }
