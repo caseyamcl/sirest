@@ -47,7 +47,7 @@ abstract class View implements ViewInterface
 
     // --------------------------------------------------------------
 
-    public function finalize(Response $response)
+    public function finalize(Response &$response)
     {
         // pass; don't do anything to the response
     }

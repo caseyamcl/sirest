@@ -44,7 +44,7 @@ interface ViewInterface
      *
      * @param \Symfony\Component\HttpFoundation\Response $response
      */
-    function finalize(Response $response);
+    function finalize(Response &$response);
 }
 
 /* EOF: ViewInterface.php */
