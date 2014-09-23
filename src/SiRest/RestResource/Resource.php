@@ -15,7 +15,7 @@
 namespace SiRest\RestResource;
 
 /**
- * Resource Definition
+ * HealthResource Definition
  * 
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
@@ -196,4 +196,4 @@ class Resource
     }
 }
 
-/* EOF: Resource.php */
+/* EOF: HealthResource.php */

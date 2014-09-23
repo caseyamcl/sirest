@@ -56,7 +56,7 @@ class ResourceCollection extends ArrayCollection
         
         if ( ! $value instanceOf Resource) {
             throw new \InvalidArgumentException(sprintf(
-                "%s::set() expects a Resource",
+                "%s::set() expects a HealthResource",
                 get_called_class()
             ));
         }

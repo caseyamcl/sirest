@@ -3,7 +3,7 @@
 namespace SiRest\RestResource;
 
 /**
- * Resource Repository Interface
+ * HealthResource Repository Interface
  * 
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */

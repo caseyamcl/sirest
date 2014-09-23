@@ -18,7 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Silex\ControllerCollection;
 
 /**
- * Default Resource Route Provider
+ * Default HealthResource Route Provider
  * 
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */

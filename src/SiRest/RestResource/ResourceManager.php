@@ -17,7 +17,7 @@ namespace SiRest\RestResource;
 use Silex\ControllerCollection;
 
 /**
- * Resource Manager
+ * HealthResource Manager
  */
 class ResourceManager
 {
