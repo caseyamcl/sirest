@@ -41,7 +41,7 @@ abstract class View implements ViewInterface
      *  $this->addType(RepresentationTypeInterface $type)
      *  $this->addRepresentation('application/json', array('x' => 'y'));
      *
-     * @param SiRest\RestOutput\RepresentationTypesCollection $types
+     * @param RepresentationTypeCollection $types
      */
     abstract public function buildRepresentations(RepresentationTypeCollection $types);
 

@@ -23,6 +23,10 @@ class JsonBodyInterpreter implements RequestBodyInterpreterInterface
 {
     /**
      * JsonBodyInterpreter can handle any JSON-encoded body
+     *
+     * @param string $reqContentType
+     * @param string $requestBody
+     * @return bool
      */
     public function canHandle($reqContentType, $requestBody)
     {
@@ -37,6 +41,8 @@ class JsonBodyInterpreter implements RequestBodyInterpreterInterface
     /**
      * Get the data into an array
      *
+     * @param string $reqContentType
+     * @param string $requestBody
      * @return array
      */
     public function getData($reqContentType, $requestBody)

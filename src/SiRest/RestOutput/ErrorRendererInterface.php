@@ -24,7 +24,10 @@ interface ErrorRendererInterface extends RepresentationTypeInterface
     /**
      * Render an error
      *
-     * @return \Symfony\Component\HttpFoundation\Response|string  Rendered response
+     * @param \Exception $e
+     * @param            $httpCode
+     * @param bool       $debug
+     * @return string|\Symfony\Component\HttpFoundation\Response Rendered response
      */
     function renderError(\Exception $e, $httpCode, $debug = false);
 }

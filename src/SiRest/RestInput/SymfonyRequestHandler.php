@@ -14,6 +14,7 @@
 
 namespace SiRest\RestInput;
 
+use SiRest\RestInput\RequestBodyInterpreter\RequestBodyInterpreterInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SiRest\RestInput\RequestBodyInterpreter\RequestBodyInterpreterInterface as RequestBodyInterpreter;
 
@@ -26,12 +27,12 @@ use SiRest\RestInput\RequestBodyInterpreter\RequestBodyInterpreterInterface as R
 class SymfonyRequestHandler implements InputHandlerInterface
 {
     /**
-     * @var Symfony\Component\HttpFoundation\Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
 
     /**
-     * @var FSURCC\MgmtTool\InputHandler\RequestBodyHandler\RequestBodyInterpreterInterface
+     * @var RequestBodyInterpreterInterface
      */
     private $reqBodyInterpreter;
 
@@ -45,8 +46,8 @@ class SymfonyRequestHandler implements InputHandlerInterface
     /**
      * Constructor
      *
-     * @param RequestBodyInterpreter\RequestBodyInterpreterInterface $reqBodyInterpreter
-     * @param Symfony\Component\HttpFoundation\Request               $request
+     * @param RequestBodyInterpreter $reqBodyInterpreter
+     * @param Request                $request
      */
     public function __construct(RequestBodyInterpreter $reqBodyInterpreter = null, Request $request = null)
     {
@@ -146,7 +147,7 @@ class SymfonyRequestHandler implements InputHandlerInterface
     /**
      * Parse the request body using the interpreter if it has been set
      *
-     * @param Symfony\Component\HttpFoundation\Request $request
+     * @param \Symfony\Component\HttpFoundation\Request $request
      */
     protected function parseReqBody(Request $request)
     {

@@ -23,12 +23,12 @@ use Exception;
 class ErrorHandlerService
 {
     /**
-     * @var SiRest\RestOutput\RepresentationTypeCollection
+     * @var RepresentationTypeCollection
      */
     private $types;
     
     /**
-     * @var SiRest\RestOutput\ViewRenderer
+     * @var ViewRenderer
      */
     private $renderer;
     

@@ -24,12 +24,12 @@ namespace SiRest\RestOutput;
 class OutputService
 {
     /**
-     * @var SiRest\RestOutput\RepresentationTypeCollection
+     * @var RepresentationTypeCollection
      */
     protected $types;
 
     /**
-     * @var SiRest\RestOutput\ViewRenderer
+     * @var ViewRenderer
      */
     protected $renderer;
 
@@ -38,7 +38,8 @@ class OutputService
     /**
      * Constructor
      *
-     * @param SiRest\RestOutput\RepresentationTypeCollection
+     * @param ViewRenderer                 $renderer
+     * @param RepresentationTypeCollection $types
      */
     public function __construct(ViewRenderer $renderer, RepresentationTypeCollection $types = null)
     {
@@ -66,6 +67,9 @@ class OutputService
      * Render a view
      *
      * @param ViewInterface $view
+     * @param int           $httpCode
+     * @param array         $extraHeaders
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function render(ViewInterface $view, $httpCode = 200, array $extraHeaders = array())
     {

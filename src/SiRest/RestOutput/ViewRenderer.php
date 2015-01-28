@@ -28,12 +28,12 @@ use Negotiation\Negotiator;
 class ViewRenderer
 {
     /**
-     * @var Symfony\Component\HttpFoundation\Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
 
     /**
-     * @var Negotiation\FormatNegotiator
+     * @var \Negotiation\FormatNegotiator
      */
     private $negotiator;
 
@@ -42,8 +42,8 @@ class ViewRenderer
     /**
      * Constructor
      *
-     * @param Symfony\Component\HttpFoundation\Request $request
-     * @param Negotiation\FormatNegotiator $negotiator
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Negotiation\Negotiator $negotiator
      */
     public function __construct(Request $request = null, Negotiator $negotiator = null)
     {
@@ -71,7 +71,7 @@ class ViewRenderer
     /**
      * Set the format negotiator
      *
-     * @param \Negotiation\FormatNegotiator $negotiator
+     * @param \Negotiation\Negotiator $negotiator
      */
     public function setNegotiator(Negotiator $negotiator)
     {

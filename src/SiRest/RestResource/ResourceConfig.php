@@ -14,9 +14,7 @@
 
 namespace SiRest\RestResource;
 
-use Symfony\Component\OptionsResolver\OptionsResolverInterface,
-    Symfony\Component\OptionsResolver\OptionsResolver,
-    Symfony\Component\OptionsResolver\Options;
+
 
 /**
  * Endpoint Configuration
@@ -69,7 +67,7 @@ class ResourceConfig
     {
         if ($this->__isset($item)) {
             return $this->$item;
-        }  
+        }
     }
 
     // --------------------------------------------------------------

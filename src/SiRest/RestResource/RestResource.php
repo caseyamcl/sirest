@@ -14,12 +14,14 @@
 
 namespace SiRest\RestResource;
 
+use Silex\ControllerCollection;
+
 /**
  * HealthResource Definition
  * 
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class Resource 
+class RestResource
 {
     /**
      * @var string - Set at construction - immutable
@@ -27,27 +29,27 @@ class Resource
     private $slug;
         
     /**
-     * @var SiRest\RestResource\ResourceConfig
+     * @var ResourceConfig
      */
     private $config;
     
     /**
-     * @var SiRest\RestResource\ResourceRepositoryInterface
+     * @var ResourceRepositoryInterface
      */
     private $repository;    
     
     /**
-     * @var SiRest\RestResource\ResourceControllerInterface
+     * @var ResourceControllerInterface
      */
     private $indexController;
     
     /**
-     * @var SiRest\RestResource\ResourceControllerInterface
+     * @var ResourceControllerInterface
      */
     private $singleController;
         
     /**
-     * @var SiRest\RestResource\ResourceRouteProvider
+     * @var ResourceRouteProvider
      */
     private $routeProvider;
 
@@ -58,7 +60,7 @@ class Resource
      * 
      * @param string $slug
      * @param array  $config
-     * @param SiRest\RestResource\ResourceRepositoryInterface$repo
+     * @param ResourceRepositoryInterface $repo
      */
     public function __construct($slug, array $config, ResourceRepositoryInterface $repo)
     {
@@ -104,7 +106,7 @@ class Resource
     /**
      * Get configuration
      *
-     * @return SiRest\RestResource\RestConfig
+     * @return ResourceConfig
      */
     public function getConfig()
     {
@@ -116,7 +118,7 @@ class Resource
     /**
      * Get index Controller
      * 
-     * @return SiRest\RestResource\RestControllerInterface|null
+     * @return ResourceControllerInterface|null
      */
     public function getIndexController()
     {
@@ -128,7 +130,7 @@ class Resource
     /**
      * Get single controller
      * 
-     * @return SiRest\RestResource\RestControllerInterface|null
+     * @return ResourceControllerInterface|null
      */
     public function getSingleController()
     {
@@ -140,7 +142,7 @@ class Resource
     /**
      * Set repository
      * 
-     * @param SiRest\RestResource\ResourceRepositoryInterface $repo
+     * @param ResourceRepositoryInterface $repo
      */
     public function setRepository(ResourceRepositoryInterface $repo)
     {
@@ -148,12 +150,12 @@ class Resource
     }
     
     // --------------------------------------------------------------
-   
+
     /**
      * Set index controller
-     * 
-     * @param SiRest\RestResource\RestControllerInterface $controller
-     */    
+     *
+     * @param ResourceControllerInterface $controller
+     */
     public function setIndexController(ResourceControllerInterface $controller)
     {
         $this->indexController = $controller;
@@ -164,7 +166,7 @@ class Resource
     /**
      * Set single controller
      * 
-     * @param SiRest\RestResource\RestControllerInterface $controller
+     * @param ResourceControllerInterface $controller
      */        
     public function setSingleController(ResourceControllerInterface $controller)
     {
@@ -176,7 +178,7 @@ class Resource
     /**
      * Set route provider
      * 
-     * @param SiRest\RestResource\ResourceRouteProvider $routeProvider
+     * @param ResourceRouteProvider $routeProvider
      */      
     public function setRouteProvider(ResourceRouteProvider $routeProvider)
     {
@@ -188,9 +190,9 @@ class Resource
     /**
      * Register the route with Silex
      * 
-     * @param \Silex\ControllerCollection $routes
+     * @param ControllerCollection $routes
      */
-    public function register(\Silex\ControllerCollection $routes)
+    public function register(ControllerCollection $routes)
     {
         $this->routeProvider->register($routes, $this);
     }

@@ -23,8 +23,12 @@ interface ResourceControllerInterface
 {
     /**
      * GET Index
+     *
+     * @param Request  $request
+     * @param Resource $resource
+     * @return mixed
      */
-    public function get(Request $request, Resource $resource);
+    function get(Request $request, RestResource $resource);
 }
 
 /* EOF: ControllerInterface.php */

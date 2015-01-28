@@ -22,7 +22,7 @@ use Twig_Error_Loader, Twig_Environment;
 use LogicException;
 
 /**
- * Twig Rest Outpt Type
+ * Twig Rest Output Type
  */
 class Twig implements RepresentationTypeInterface, ErrorRendererInterface
 {

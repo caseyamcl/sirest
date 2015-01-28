@@ -28,10 +28,10 @@ class ResourceRouteProvider
      * Register route with Silex
      * 
      * @param \Silex\ControllerCollection $routes
-     * @param \SiRest\RestResource\Resource $resource
-     * @return Silex\Controller
+     * @param \SiRest\RestResource\RestResource $resource
+     * @return \Silex\Controller
      */
-    public function register(ControllerCollection $routes, Resource $resource)
+    public function register(ControllerCollection $routes, RestResource $resource)
     {
         $slug = $resource->getSlug();
         $bind = $resource->getConfig()->routeName;
@@ -62,11 +62,11 @@ class ResourceRouteProvider
      * Handle the request
      * 
      * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \SiRest\RestResource\Resource $resource
+     * @param \SiRest\RestResource\RestResource $resource
      * @param string $id  Optional ID (if not null, then use single controller)
      * @return string|\Symfony\Component\HttpFoundation\Response  Return a response object or string
      */
-    protected function handleRequest(Request $request, Resource $resource, $id = null)
+    protected function handleRequest(Request $request, RestResource $resource, $id = null)
     {
         $methodName = strtolower($request->getMethod());
                 

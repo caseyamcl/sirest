@@ -33,11 +33,12 @@ class Csv implements RepresentationTypeInterface, ErrorRendererInterface
     // --------------------------------------------------------------
 
     /**
-     * @return Symfony\Component\HttpFoundation\StreamedResponse
+     * @param array $params
+     * @return StreamedResponse
      */
-    public function render($data = [])
+    public function render(array $params = [])
     {
-        return $this->doRender($data);
+        return $this->doRender($params);
     }
 
     // --------------------------------------------------------------
@@ -76,7 +77,7 @@ class Csv implements RepresentationTypeInterface, ErrorRendererInterface
      * Convert array to CSV
      * 
      * @param array $data
-     * @return Symfony\Component\HttpFoundation\StreamedResponse
+     * @return \Symfony\Component\HttpFoundation\StreamedResponse
      */
     protected function doRender(array $data)
     {

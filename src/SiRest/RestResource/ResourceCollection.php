@@ -30,7 +30,7 @@ class ResourceCollection extends ArrayCollection
 
     // --------------------------------------------------------------
 
-    public function setResource(Resource $resource)
+    public function setResource(RestResource $resource)
     {
         $this->set($resource->getSlug(), $resource);
     }
@@ -41,7 +41,7 @@ class ResourceCollection extends ArrayCollection
      * Wraps parent::set() to provide some additional rules
      * 
      * @param string $key
-     * @param \SiRest\RestResource\Resource $value
+     * @param \SiRest\RestResource\RestResource $value
      * @throws \InvalidArgumentException
      */
     public function set($key, $value)
@@ -54,7 +54,7 @@ class ResourceCollection extends ArrayCollection
             ), E_NOTICE);
         }
         
-        if ( ! $value instanceOf Resource) {
+        if ( ! $value instanceOf RestResource) {
             throw new \InvalidArgumentException(sprintf(
                 "%s::set() expects a HealthResource",
                 get_called_class()

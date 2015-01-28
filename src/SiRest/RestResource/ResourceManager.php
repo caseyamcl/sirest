@@ -35,9 +35,9 @@ class ResourceManager
     /**
      * Shortcut method to add an resource to the collection
      * 
-     * @param Endpoint $resource
+     * @param Resource $resource
      */
-    public function addResource(Resource $resource)
+    public function addResource(RestResource $resource)
     {
         $this->resources->add($resource);
     }

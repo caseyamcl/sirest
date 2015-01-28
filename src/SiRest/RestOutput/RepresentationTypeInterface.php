@@ -25,7 +25,8 @@ interface RepresentationTypeInterface
     function getMime();
     
     /**
-     * @return Symfony\Component\HttpFoundation\Response|string
+     * @param array $params
+     * @return \Symfony\Component\HttpFoundation\Response|string
      */
     function render(array $params = []);
 }
