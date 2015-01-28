@@ -67,6 +67,9 @@ class Twig implements RepresentationTypeInterface, ErrorRendererInterface
 
     // --------------------------------------------------------------
 
+    /**
+     * @return string
+     */
     public function getMime()
     {
         return $this->mime;
@@ -87,6 +90,11 @@ class Twig implements RepresentationTypeInterface, ErrorRendererInterface
     // --------------------------------------------------------------
 
     /**
+     * Render the output
+     *
+     * If the $params['template'] is an array, this will try all of the Twig
+     * templates in order until it finds one that works.
+     *
      * @param array $params  Must contain ['template'] key and optionally ['data'] key
      * @return string
      * @throws LogicException
@@ -107,8 +115,8 @@ class Twig implements RepresentationTypeInterface, ErrorRendererInterface
         if (count($params) > 0) {
             throw new \InvalidArgumentException(sprintf("Data params for %s::render() can only contain 'template' and 'data' keys", __CLASS__));
         }
-        
-        return $this->twig->render($templateName, $templateData);
+
+        return $this->tryMultipleTemplateNames((array) $templateName, $templateData);
     }
 
     // --------------------------------------------------------------
@@ -116,13 +124,14 @@ class Twig implements RepresentationTypeInterface, ErrorRendererInterface
     /**
      * Render error, or return null
      *
-     * @param Exception $e
-     * @param int       $code
-     * @param boolean   $debug
+     * @param \Exception $e
+     * @param int        $code
+     * @param boolean    $debug
      * @return string|null  Returns NULL if no error template was found
      */
     public function renderError(\Exception $e, $code, $debug = false)
-    {                
+    {
+        // Return 'null' on debug to get Symfony default error handling
         if ($debug) {
             return null;
         }
@@ -134,21 +143,43 @@ class Twig implements RepresentationTypeInterface, ErrorRendererInterface
             $this->errorPrefix . 'error' . $this->errorSuffix
         );
 
-        foreach ($templatesToTry as $file) {
+        try {
+
+            $content = $this->tryMultipleTemplateNames(
+              $templatesToTry,
+              ['exception' => $e, 'httpCode' => $code, 'debug' => $debug]
+            );
+            return new Response($content, $code);
+
+        }
+        catch (Twig_Error_Loader $e) {
+            return null;
+        }
+    }
+
+    // ---------------------------------------------------------------
+
+    /**
+     * Try multiple templates
+     *
+     * @param array $templateNames
+     * @param array $data
+     * @return string
+     * @throws Twig_Error_Loader  If none of the templates work
+     */
+    protected function tryMultipleTemplateNames(array $templateNames, array $data = [])
+    {
+        foreach ($templateNames as $file) {
+
             try {
-                $content = $this->twig->render(
-                    $file,
-                    array('exception' => $e, 'httpCode' => $code, 'debug' => $debug)
-                );
-                return new Response($content, $code);
+                return $this->twig->render($file, $data);
             }
             catch (Twig_Error_Loader $e) {
                 // pass
             }
         }
-        
-        // If made it here..
-        return null;
+
+        throw new Twig_Error_Loader("Could not locate any of the following templates: " . implode(', ', $templateNames));
     }
 }
 
