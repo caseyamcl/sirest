@@ -22,7 +22,7 @@ namespace SiRest\RestInput\RequestBodyInterpreter;
 class ChainRequestBodyInterpreter implements RequestBodyInterpreterInterface
 {
     /**
-     * @var array
+     * @var array|RequestBodyInterpreterInterface[]
      */
     private $handlers;
 
@@ -58,6 +58,13 @@ class ChainRequestBodyInterpreter implements RequestBodyInterpreterInterface
 
     // --------------------------------------------------------------
 
+    /**
+     * Get Data
+     *
+     * @param string $reqContentType
+     * @param string $requestBody
+     * @return array
+     */
     public function getData($reqContentType, $requestBody)
     {
         $handler = $this->getFirstAcceptedHandler($reqContentType, $requestBody);
@@ -72,6 +79,11 @@ class ChainRequestBodyInterpreter implements RequestBodyInterpreterInterface
 
     // --------------------------------------------------------------
 
+    /**
+     * @param $reqContentType
+     * @param $requestBody
+     * @return RequestBodyInterpreterInterface
+     */
     protected function getFirstAcceptedHandler($reqContentType, $requestBody)
     {
         foreach ($this->handlers as $handler) {
@@ -80,8 +92,8 @@ class ChainRequestBodyInterpreter implements RequestBodyInterpreterInterface
             }
         }
 
-        //if made it here, none of them can handle it
-        return false;
+        // If made it here...
+        return null;
     }
 }
 
