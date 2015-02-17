@@ -15,7 +15,7 @@
 namespace SiRest\RestInput;
 
 use SiRest\RestInput\RequestBodyInterpreter\RequestBodyInterpreterInterface;
-use Symfony\Component\HttpFoundation\Request;
+use SiRest\RestInput\RequestBridge\RequestBridgeInterface;
 use SiRest\RestInput\RequestBodyInterpreter\RequestBodyInterpreterInterface as RequestBodyInterpreter;
 
 /**
@@ -24,10 +24,10 @@ use SiRest\RestInput\RequestBodyInterpreter\RequestBodyInterpreterInterface as R
  *
  * @author Casey McLaughlin <caseyamcl@gmail.com>
  */
-class SymfonyRequestHandler implements InputHandlerInterface
+class InputHandler implements InputHandlerInterface
 {
     /**
-     * @var \Symfony\Component\HttpFoundation\Request
+     * @var RequestBridgeInterface
      */
     private $request;
 
@@ -47,42 +47,14 @@ class SymfonyRequestHandler implements InputHandlerInterface
      * Constructor
      *
      * @param RequestBodyInterpreter $reqBodyInterpreter
-     * @param Request                $request
+     * @param RequestBridgeInterface $requestBridge
      */
-    public function __construct(RequestBodyInterpreter $reqBodyInterpreter = null, Request $request = null)
-    {
-        if ($reqBodyInterpreter) {
-            $this->setReqBodyInterpreter($reqBodyInterpreter);
-        }
-
-        if ($request) {
-            $this->setRequest($request);
-        }
-    }
-
-    // --------------------------------------------------------------
-
-    public function setReqBodyInterpreter(RequestBodyInterpreter $reqBodyInterpreter)
+    public function __construct(RequestBodyInterpreter $reqBodyInterpreter, RequestBridgeInterface $requestBridge)
     {
         $this->reqBodyInterpreter = $reqBodyInterpreter;
+        $this->request  = $requestBridge;
 
-        // Parse the request body data with the new reqBodyInterperter
-        if ($this->request) {
-            $this->parseReqBody($this->request);
-        }
-    }
-
-    // --------------------------------------------------------------
-
-    /**
-     * Set the Request Object
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     */
-    public function setRequest(Request $request)
-    {
-        $this->request = $request;
-        $this->parseReqBody($request);
+        $this->initReqBodyData();
     }
 
     // --------------------------------------------------------------
@@ -95,7 +67,7 @@ class SymfonyRequestHandler implements InputHandlerInterface
      */
     public function getQueryParam($optionName)
     {
-        return $this->request->query->get($optionName);
+        return $this->request->getQueryParam($optionName);
     }
 
     // --------------------------------------------------------------
@@ -107,7 +79,7 @@ class SymfonyRequestHandler implements InputHandlerInterface
      */
     public function getQueryParams()
     {
-        return $this->request->query->all();
+        return $this->request->getQueryParams();
     }
 
     // --------------------------------------------------------------
@@ -120,12 +92,9 @@ class SymfonyRequestHandler implements InputHandlerInterface
      */
     public function getDataParam($paramName)
     {
-        if ($this->reqBodyData && isset($this->reqBodyData[$paramName])) {
-            return $this->reqBodyData[$paramName];
-        }
-        else {
-            return $this->request->request->get($paramName);
-        }
+        return ($this->reqBodyData && isset($this->reqBodyData[$paramName]))
+            ? $this->reqBodyData[$paramName]
+            : null;
     }
 
     // --------------------------------------------------------------
@@ -138,7 +107,7 @@ class SymfonyRequestHandler implements InputHandlerInterface
     public function getDataParams()
     {
         return ($this->reqBodyData)
-            ? array_merge($this->reqBodyData, (array) $this->request->request->all())
+            ? array_merge($this->reqBodyData)
             : (array) $this->request->request->all();
     }
 
@@ -146,13 +115,11 @@ class SymfonyRequestHandler implements InputHandlerInterface
 
     /**
      * Parse the request body using the interpreter if it has been set
-     *
-     * @param \Symfony\Component\HttpFoundation\Request $request
      */
-    protected function parseReqBody(Request $request)
+    protected function initReqBodyData()
     {
-        $reqBody  = $request->getContent();
-        $reqCType = $request->headers->get('Content-Type');
+        $rawContent = $this->request->getRequestBody();
+        $reqCType   = $this->request->getRequestFormat();
 
         if ($this->reqBodyInterpreter && $this->reqBodyInterpreter->canHandle($reqCType, $reqBody)) {
             $this->reqBodyData = $this->reqBodyInterpreter->getData($reqCType, $reqBody);

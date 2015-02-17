@@ -12,6 +12,9 @@ use Closure,
  */
 class SimpleView implements ViewInterface
 {
+    /**
+     * @var array
+     */
     private $representations;
 
     // --------------------------------------------------------------

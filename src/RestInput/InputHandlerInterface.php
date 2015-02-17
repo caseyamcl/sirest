@@ -37,7 +37,7 @@ interface InputHandlerInterface
     function getQueryParam($optionName);
 
     /**
-     * Get all parameters (typically maps to post/JSON data)
+     * Get all parameters (typically maps to POST or JSON data)
      *
      * @return array
      */
