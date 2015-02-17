@@ -17,7 +17,7 @@
     ],
     "autoload": {
         "psr-4": {
-            "SiRest": ["src/", "tests/"]
+            "SiRest\\": ["src/", "tests/"]
         }
     },
     "require": {
